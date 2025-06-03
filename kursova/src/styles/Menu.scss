@@ -1,0 +1,147 @@
+.graph-menu {
+  position: absolute;
+  top: 30px;
+  right: 40px;
+  z-index: 100;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+
+  &__toggle {
+    background: #d3d3d3;
+    border: 2px solid #b0b0b0;
+    border-radius: 16px;
+    width: 48px;
+    height: 48px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: background 0.25s;
+    margin-left: auto;
+    z-index: 2;
+    box-shadow: 0 0 8px #ccc3;
+    &:hover {
+      background: #e0e0e0;
+    }
+    span {
+      display: block;
+      width: 26px;
+      height: 3.5px;
+      background: #222;
+      border-radius: 2px;
+      margin: 3.5px 0;
+      transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+  }
+  &__toggle--open {
+    background: #b0b0b0;
+    span {
+      background: #222;
+    }
+    span:nth-child(1) {
+      transform: translateY(7px) rotate(-45deg);
+    }
+    span:nth-child(2) {
+      opacity: 0;
+    }
+    span:nth-child(3) {
+      transform: translateY(-7px) rotate(45deg);
+    }
+  }
+
+  &__panel {
+    position: absolute;
+    top: 0;
+    right: 60px; // зліва від кнопки
+    pointer-events: none;
+    opacity: 0;
+    transform: translateX(32px) scaleY(0.98);
+    transition: opacity 0.25s, transform 0.25s;
+    z-index: 1;
+    min-width: 0;
+  }
+  &--open &__panel {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0) scaleY(1);
+  }
+
+  &__items {
+    background: #d9d9d9;
+    border-radius: 20px;
+    padding: 12px 20px 10px 20px;
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    box-shadow: 0px 4px 16px rgba(0,0,0,0.08);
+    min-width: 220px;
+    max-width: 60vw;
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
+
+  &__item {
+    background: white;
+    color: #232323;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 24px;
+    font-size: 1.10rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    min-width: 100px;
+    outline: none;
+
+    &:hover,
+    &:focus {
+      background: #ccc;
+    }
+  }
+}
+
+.matrix-panel__overlay {
+  position: fixed;
+  z-index: 130;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.32);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.matrix-panel {
+  background: #d9d9d9;
+  border-radius: 20px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.09);
+  padding: 32px 28px 24px 28px;
+  min-width: 340px;
+  max-width: 96vw;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+
+  textarea {
+    width: 100%;
+    border-radius: 12px;
+    border: 1.5px solid #b0b0b0;
+    resize: vertical;
+    font-size: 16px;
+    margin-top: 12px;
+    padding: 8px;
+    background: white;
+    color: #212121;
+  }
+  button {
+    border-radius: 12px;
+    border: none;
+    background: #222;
+    color: #fff;
+    padding: 10px 18px;
+    font-size: 1rem;
+    cursor: pointer;
+    &:hover {
+      background: #4c4c4c;
+    }
+  }
+}
