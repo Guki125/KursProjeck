@@ -112,6 +112,12 @@ const GraphCanvas = () => {
         };
     };
 
+    //створити матрицю з графу
+    const exportCurrentMatrix = () => {
+        if (!adjMatrix || !adjMatrix.length) return '';
+        return adjMatrix.map(row => row.join(' ')).join('\n');
+    };
+
     // Створити граф з матриці
     const createGraphFromMatrix = (matrix) => {
         const newNodes = matrix.map((_, i) => ({
@@ -163,6 +169,7 @@ const GraphCanvas = () => {
                 matrixInput={matrixInput}
                 setMatrixInput={setMatrixInput}
                 parseMatrixInput={parseMatrixInput}
+                exportCurrentMatrix={exportCurrentMatrix} // Додаємо проп тут!
             />
             <svg className="graph-canvas__svg" onClick={handleCanvasClick}>
                 <defs>

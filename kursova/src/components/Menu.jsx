@@ -2,17 +2,23 @@ import React, { useState } from 'react';
 import AboutModal from './AboutModal';
 import '../styles/Menu.scss';
 
-
 const menuItems = [
     { id: 1, label: 'Про проект', type: 'about' },
     { id: 2, label: 'Ввести матрицю', type: 'matrix' },
+    { id: 3, label: 'Граф → матриця', type: 'exportMatrix' }, // новий пункт
 ];
 
-const Menu = ({ matrixInput, setMatrixInput, parseMatrixInput }) => {
+const Menu = ({
+                  matrixInput,
+                  setMatrixInput,
+                  parseMatrixInput,
+                  exportCurrentMatrix // новий проп
+              }) => {
     const [open, setOpen] = useState(false);
     const [showMatrixInput, setShowMatrixInput] = useState(false);
     const [showAboutModal, setShowAboutModal] = useState(false);
-
+    const [showExportMatrix, setShowExportMatrix] = useState(false);
+    const [matrixString, setMatrixString] = useState('');
     const placeholderMatrix = "0 1 0\n0 0 1\n1 0 0";
 
     return (
@@ -35,6 +41,12 @@ const Menu = ({ matrixInput, setMatrixInput, parseMatrixInput }) => {
                             onClick={() => {
                                 if (item.type === 'matrix') setShowMatrixInput(true);
                                 else if (item.type === 'about') setShowAboutModal(true);
+                                else if (item.type === 'exportMatrix') {
+                                    if (typeof exportCurrentMatrix === 'function') {
+                                        setMatrixString(exportCurrentMatrix());
+                                        setShowExportMatrix(true);
+                                    }
+                                }
                             }}
                             tabIndex={open ? 0 : -1}
                         >
@@ -63,6 +75,22 @@ const Menu = ({ matrixInput, setMatrixInput, parseMatrixInput }) => {
                                 Створити граф
                             </button>
                             <button onClick={() => setShowMatrixInput(false)}>Закрити</button>
+                        </div>
+                    </div>
+                </div>
+            )}
+            {showExportMatrix && (
+                <div className="matrix-panel__overlay" onClick={() => setShowExportMatrix(false)}>
+                    <div className="matrix-panel" onClick={e => e.stopPropagation()}>
+                        <h3>Матриця суміжності графа</h3>
+                        <textarea
+                            value={matrixString}
+                            readOnly
+                            rows="5"
+                            style={{ width: '100%' }}
+                        />
+                        <div style={{ marginTop: 8 }}>
+                            <button onClick={() => setShowExportMatrix(false)}>Закрити</button>
                         </div>
                     </div>
                 </div>
